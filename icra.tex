@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{epstopdf}
+\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+\usepackage{amsmath} % assumes amsmath package installed
+\usepackage{amssymb}  % assumes amsmath package installed
+\DeclareMathOperator{\sgn}{sgn}
+\title{\LARGE \bf
+Simulation-Driven Robot Controller Design
+}
+
+
+\author{Jie Tan$^{1}$ ~~~Zhaoming Xie$^{1}$ ~~~Byron Boots$^{2}$ ~~~Greg Turk$^{2}$ ~~~Karen Liu$^{2}$% <-this % stops a space
+\thanks{$^{1}$The authors are with College of Computing, Georgia Institute of Technology, Atlanta, GA, USA. Email:
+        {\tt\small \{jtan34, zxie47\}@gatech.edu}}%
+\thanks{$^{2}$The authors are with College of Computing, Georgia Institute of Technology, Atlanta, GA, USA. Email:
+        {\tt\small \{bboots, karenliu, turk\}@cc.gatech.edu}}%
+}
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\input{intro}
+\input{related}
+\input{overview}
+\input{simulation}
+\input{optimization}
+\input{calibration}
+\input{results}
+\input{conclusion}
+\bibliographystyle{IEEEtran}
+\bibliography{icra}
+
+\end{document}
