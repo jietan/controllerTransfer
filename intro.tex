@@ -7,11 +7,4 @@ To tackle these challenges, we develop a simulation-driven approach that consist
 
 We use \emph{simulation calibration} to cross the Reality Gap. Simulation calibration is a dynamic system identification method. During calibration, we collect the real performance data on the robot, and use it to improve our physical simulator. We optimize a set of simulation parameters to minimize the discrepancy between the simulation results and the collected real data. Through calibration, the simulator can capture the real world dynamics more faithfully. This calibrated simulator is used again in controller optimization to improve the quality of the controller. Unlike traditional system identification, which is a separate step from controller design, our simulation calibration is tightly coupled with the controller optimization. We directly peform the optimal controller that is found in the simulation to collect real data for system identification. In this way, the simulation is calibrated at the vicinity of the current optimal controller. The computation is focused at the important regions of the control space and thus fewer robot experiments are needed. We evaluate our system using four locomotion tasks: lean-to-stand, sit-to-stand, kneel-to-stand and stand-to-handstand. Although these tasks are distinctively different, our system can find successful controllers for all the tasks efficiently and automatically. 
 
-\begin{figure*}[!t]
-  \centering
-  \includegraphics[width=0.7\textwidth]{figures/controllerTransfer}
-  \caption{Overview of our algorithm.}
-  \label{fig:controllerTransferOverview}
-\end{figure*}
-
 The main contribution of this paper is a complete pipeline that can automatically design robot controllers for a wide range of locomotion tasks. Starting from task specifications, our system can find controllers that operate on the robot, with minimal human intervention. It replaces the tedious manual tuning with automatic optimization processes, and drastically reduces the number of expensive robot experiments. This simulation-driven approach can effectively cut the time and the cost of designing robot controllers.

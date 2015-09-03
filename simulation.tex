@@ -32,7 +32,7 @@ We design robot experiments to identify the actuator gains $k_p$, $k_d$ and $k_c
 
 Given $q(t)$ and $\bar{q}(t)$, we can apply regression to estimate the actuator gains. From eq. (\ref{eqn:torqueErrorRelationSimple}), we have
 \begin{equation}
-\ddot{q}=I^{-1}(-k_p\Delta q - k_d\dot{q} - k_c\sgn(\dot{q}))
+I\ddot{q}=-k_p\Delta q - k_d\dot{q} - k_c\sgn(\dot{q})
 \end{equation}
 where $I$ is the moment of inertia of the foot with respect to the rotating axis. The above equation is derived by plugging into $\tau = I\ddot{q}+\dot{I}\dot{q}$ and the fact that $\dot{I}\dot{q}=0$ because the foot is a rigid body that rotates along a fixed axis. Ideally, $\ddot{q}$ and $\dot{q}$ can be computed using finite difference. However, the measurement of $q(t)$ is too noisy and finite difference would greatly magnify the noise. To solve this problem, we first smooth $q(t)$ by performing a 4th-order polynomial regression:
 \begin{equation}
@@ -47,7 +47,7 @@ where $a,b,c,d,e$ are the polynomial coefficients. This regression gives us a sm
 
 Combining eq. (\ref{eqn:Deltaq}), (\ref{eqn:Deltaqdot}) and (\ref{eqn:Deltaqddot}), we can perform another regression to compute the actuator gains.
 \begin{equation}
-\min_{k_p, k_d, k_c}\int||\ddot{q}(t)-I^{-1}(-k_p(q(t)-\bar{q}(t)) - k_d\dot{q}(t) - k_c\sgn(\dot{q}(t)))||^2\mathrm{d}t
+\min_{k_p, k_d, k_c}\int||I\ddot{q}(t)+(k_p(q(t)-\bar{q}(t)) + k_d\dot{q}(t) + k_c\sgn(\dot{q}(t)))||^2\mathrm{d}t
 \end{equation}
 
 Our experiments and computation show that the actuator gains are $k_p=9.272(N\cdot m/rad)$, $k_d=0.3069(N\cdot m\cdot s/rad)$, and $k_c=0.03(N\cdot m)$. To verify the correctness of these values, we plug them into the simulator and repeat the same experiment in the simulation. The red curve in Figure \ref{fig:actuatorId} Right is the error over time predicted in our simulation, which agrees well with the data that was collected from the robot experiment.
