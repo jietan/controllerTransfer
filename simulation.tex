@@ -2,7 +2,7 @@
 
 \subsection{Dynamics Equations}
 
-We model the robot as an articulated rigid body system in our simulator. We represent the states of the system $(\mathbf{x}, \dot{\mathbf{x}})$ in the generalized coordinate, where $\mathbf{x}$ include the global position $\mathbf{p}$, orientation $\mathbf{r}$ of the root link, and the joint angles $\mathbf{q}$. The governing equations of motion is as follow:
+We model the robot as an articulated rigid body system in our simulator. We represent the states of the system $(\mathbf{x}, \dot{\mathbf{x}})$ in generalized coordinates, where $\mathbf{x}$ includes the global position $\mathbf{p}$, the orientation $\mathbf{r}$ of the root body (robot's torso), and the joint angles $\mathbf{q}$. The governing equations of motion is as follow:
 
 \begin{equation}
 \label{eq:robotdynamics}
@@ -21,7 +21,7 @@ Most of the actuators on our robot, BIOLOID GP, are ROBOTIS Dynamixel AX-18. The
 
 We call these values $k_p$, $k_d$ and $k_c$ the \emph{actuator gains}. Note that are not PID gains. Dynamixel AX-18 servos do not have the capability of PID control. These gains are determined by the design of the servo, which are unknown for us.
 
-We design a robot experiment to estimate the actuator gains $k_p$, $k_d$ and $k_c$. The purpose of this simple experiment is not to accurately identify these values. Instead, the gains that we estimate here will serve as an initial guess, and will be further optimized in simulation calibration. In the experiment, we clamp the entire robot on a table except for the left foot. We then send a periodic control signal $\bar{q}(t)$ to the servo at the left ankel (blue curve in Figure \ref{fig:actuatorId} Left). The desired joint angle stays at the maximum value for 0.67 second, then changes to the minimum value and stays for another 0.67 second and repeats. We record the trajectory of the actual joint angle $q(t)$ throughout the experiment (green curve in Figure \ref{fig:actuatorId} Left). 
+We design a robot experiment to estimate the actuator gains $k_p$, $k_d$ and $k_c$. The purpose of this simple experiment is not to accurately identify these values. Instead, the gains that we estimate here will serve as an initial guess, and will be further optimized in simulation calibration. In the experiment, we clamp the entire robot on a table except for the left foot. We then send a periodic control signal $\bar{q}(t)$ to the servo at the left ankle (blue curve in Figure \ref{fig:actuatorId} Left). The desired joint angle stays at the maximum value for 0.67 second, then changes to the minimum value and stays for another 0.67 second and repeats. We record the trajectory of the actual joint angle $q(t)$ throughout the experiment (green curve in Figure \ref{fig:actuatorId} Left). 
 
 \begin{figure}[!t]
   \centering
