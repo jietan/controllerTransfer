@@ -72,6 +72,14 @@ We successfully cross the Reality Gap with one iteration of simulation calibrati
 
 Figure \ref{fig:kneel2Stand} shows that the robot stands up from a kneeling pose. Between the user-specified initial and final poses, the controller consists of two additional keyframes. The optimization needs to search for these keyframes and the time intervals between adjacent keyframes. The controller optimized in the simulation demonstrates an agile getting-up motion: The robot first leans its upper-body backwards. As its COM is moving to the back, it quickly bends the hip, flexes its ankles and stands up. This entire motion resembles one of the most agile ways that we human get up from a kneeling position when we do not use our hands for additional support. Although this controller works perfectly in the simulation, the robot falls backward in the real world. After simulation calibration, the performance of the simulated robot comes closer to the real world scenario. Using the calibrated simulator, we optimize a new controller, with which the robot can successfully stand up from the kneeling position in the real world (Figure \ref{fig:kneel2Stand}).
 
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/stand2Hand}
+  \caption{The results of the stand-to-handstand task in the simulation and on the real robot.}
+  \label{fig:stand2Hand}
+\end{figure*}
+
+
 \subsection{Flipping to a Handstand Position}
 We test our system with a more challenging task: flipping to a handstand position from a standing pose, which is often seen in gymnastics. The initial and final poses are shown in Figure~\ref{fig:stand2Hand}. The controller optimization needs to search for an additional keyframe between them. Without simulation calibration, controller optimization cannot find a controller to fulfil this task in the simulation. Nevertheless, we apply the controller with the highest fitness value to the robot to collect data for simulation calibration. After two iterations of simulation calibration and controller optimization, our system finds a successful controller that works both in the simulation and in the real world: The robot arches back rapidly and lifts its feet after the arms touch the ground. Both the speed and the curvature of the arching motion is crucial for the final balance. Although only a narrow range of such speed and curvature can lead to a balanced handstand, our system is able to automatically find a successful controller for this challenging task.
 
