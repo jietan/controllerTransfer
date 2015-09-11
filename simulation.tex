@@ -6,9 +6,9 @@ We model the robot as an articulated rigid body system in our simulator. We repr
 
 \begin{equation}
 \label{eq:robotdynamics}
-\mathbf{M}(\mathbf{x})\mathbf{\ddot{x}}+\mathbf{C}(\mathbf{x},\mathbf{\dot{x}})=\mathbf{\tau}(\mathbf{q}, \dot{\mathbf{q}}, \bar{\mathbf{q}})+\mathbf{J}^T\mathbf{f}
+\mathbf{M}(\mathbf{x})\mathbf{\ddot{x}}+\mathbf{C}(\mathbf{x},\mathbf{\dot{x}})=\boldsymbol{\tau}(\mathbf{q}, \dot{\mathbf{q}}, \bar{\mathbf{q}})+\mathbf{J}^T\mathbf{f}
 \end{equation}
-where $\mathbf{M}(\mathbf{x})$ is the mass matrix and $\mathbf{C}(\mathbf{x},\mathbf{\dot{x}})$ is the Coriolis and Centrifugal force. $\mathbf{\tau}(\mathbf{q}, \dot{\mathbf{q}}, \bar{\mathbf{q}})$ are joint torques exerted by the actuators, which depends on the current joint angles $\mathbf{q}$, velocities $\dot{\mathbf{q}}$ and desired angles $\bar{\mathbf{q}}$. The relation between these quantities is determined by the actuator model, which is presented in the next section. $\mathbf{J}$ is the Jacobian matrix and $\mathbf{f}$ is the external contact force, which is computed based on linear complementarity conditions \cite{Tan:2012b}. In our implementation, we use DART to solve the contact force and numerically integrate the system state $(\mathbf{x}, \dot{\mathbf{x}})$ over time.
+where $\mathbf{M}(\mathbf{x})$ is the mass matrix and $\mathbf{C}(\mathbf{x},\mathbf{\dot{x}})$ is the Coriolis and Centrifugal force. $\boldsymbol{\tau}(\mathbf{q}, \dot{\mathbf{q}}, \bar{\mathbf{q}})$ are joint torques exerted by the actuators, which depends on the current joint angles $\mathbf{q}$, velocities $\dot{\mathbf{q}}$ and desired angles $\bar{\mathbf{q}}$. The relation between these quantities is determined by the actuator model, which is presented in the next section. $\mathbf{J}$ is the Jacobian matrix and $\mathbf{f}$ is the external contact force, which is computed based on linear complementarity conditions \cite{Tan:2012b}. In our implementation, we use DART to solve the contact force and numerically integrate the system state $(\mathbf{x}, \dot{\mathbf{x}})$ over time.
 
 /karen{Make actuator modeling sound important. Argue why we had to build an accurate model for actuator instead of improving other sources of simulation errors.}
 

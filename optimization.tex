@@ -8,7 +8,7 @@ We first formulate a trajectory optimization problem for each task.
 \begin{align}
  \label{eqn:obj}&\max_{\bar{\mathbf{q}}(t),T} V_{ctrl}(\mathbf{x}(t))\\
 \nonumber  \mathrm{subject\;} &\mathrm{to} \\
-\label{eqn:dyn1} & \mathbf{M}(\mathbf{x})\mathbf{\ddot{x}}+\mathbf{C}(\mathbf{x},\mathbf{\dot{x}}) =\tau(\mathbf{q}, \dot{\mathbf{q}}, \bar{\mathbf{q}}) + \mathbf{J}^T\mathbf{f}\\
+\label{eqn:dyn1} & \mathbf{M}(\mathbf{x})\mathbf{\ddot{x}}+\mathbf{C}(\mathbf{x},\mathbf{\dot{x}}) =\boldsymbol{\tau}(\mathbf{q}, \dot{\mathbf{q}}, \bar{\mathbf{q}}) + \mathbf{J}^T\mathbf{f}\\
 \label{eqn:boundary1}&\bar{\mathbf{x}}(0) = \mathbf{x}_0\\
 \label{eqn:boundary2}&\bar{\mathbf{q}}(t) = \mathbf{q}_T, \text{if } t \geq T
 \end{align}
