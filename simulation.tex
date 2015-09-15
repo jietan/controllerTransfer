@@ -2,7 +2,7 @@
 
 \subsection{Dynamics Equations}
 
-We model the robot as an articulated rigid body system in our simulator. We represent the states of the system $(\mathbf{x}, \dot{\mathbf{x}})$ in generalized coordinates, where $\mathbf{x}$ includes the global position $\mathbf{p}$, the orientation $\mathbf{r}$ of the root body (robot's torso), and the joint angles $\mathbf{q}$. The governing equations of motion is as follow:
+We model the robot as an articulated rigid body system in our simulator. We represent the states of the system $(\mathbf{x}, \dot{\mathbf{x}})$ in generalized coordinates, where $\mathbf{x}$ includes the global position $\mathbf{p}$, the orientation $\mathbf{r}$ of the root body (robot's torso), and the joint angles $\mathbf{q}$. The dynamics equations is as follows:
 
 \begin{equation}
 \label{eq:robotdynamics}
@@ -15,7 +15,7 @@ where $\mathbf{M}(\mathbf{x})$ is the mass matrix and $\mathbf{C}(\mathbf{x},\ma
 
 \subsection{Actuator Model}
 \label{sec:motorDynamics}
-A faithful robot simulation relies heavily on an accurate actuator model. A common practice is to set the same PID gains in the simulation as those in the servo. However, Dynamixel AX-18 servos, which are used on our robot (ROBOTIS BIOLOID GP), do not support PID control. Although the servo can track an input desired angle $\bar{q}$, the mathematical relation between the joint error $\bar{q}-q$ and the output torque $\tau$ is not clear. We derive an actuator model based on the ideal DC motor assumption and the specification of the servo:
+A faithful robot simulation relies heavily on an accurate actuator model. A common practice is to set the same PID gains in the simulation as those in the servo. However, Dynamixel AX-18 servos, used on our robot (ROBOTIS BIOLOID GP), do not support PID control. Although the servo can track an input desired angle $\bar{q}$, the relation between the joint error $\bar{q}-q$ and the output torque $\tau$ is unclear. We derive an actuator model based on the ideal DC motor assumption and the specification of the servo:
 
 \begin{equation}
   \tau = -k_p(q-\bar{q}) - k_d\dot{q} - k_c\sgn(\dot{q})\\
@@ -33,7 +33,7 @@ We design a robot experiment to estimate the actuator gains $k_p$, $k_d$ and $k_
   \label{fig:actuatorId}
 \end{figure}
 
-Given $q(t)$ and $\bar{q}(t)$, we can apply regression to estimate the actuator gains:
+Given $q(t)$ and $\bar{q}(t)$, we apply regression to estimate the actuator gains:
 
 \begin{displaymath}
 \min_{k_p, k_d, k_c}\int||I\ddot{q}(t)+k_p(q(t)-\bar{q}(t)) + k_d\dot{q}(t) + k_c\sgn(\dot{q}(t))||^2\mathrm{d}t

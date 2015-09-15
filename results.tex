@@ -2,7 +2,7 @@
 
 \begin{figure*}[!t]
   \centering
-  \includegraphics[width=\textwidth]{figures/sit2Stand}
+  \includegraphics[width=0.95\textwidth]{figures/sit2Stand}
   \caption{The results of the sit-to-stand task in the simulation and on the real robot.}
   \vspace{-0.1in}
   \label{fig:sit2Stand}
@@ -26,7 +26,7 @@ Our system is implemented in C++ and runs on a laptop with a 2.6GHz quad-core CP
 
 \subsection{Rising from a Sitting Position}
 
-The first task is to rise from a chair (Figure \ref{fig:sit2Stand}). The initial and the final poses $q_0$ and $q_T$ are shown in the leftmost and rightmost images in Figure \ref{fig:sit2Stand}. The controller optimization needs to search for an additional inbetween keyframe $q_1$, as well as the two time intervals $t_1$ and $t_2$ between these three keyframes. 
+The first task is to rise from a chair (Figure \ref{fig:sit2Stand}). The initial and the final poses $\mathbf{q}_0$ and $\mathbf{q}_T$ are shown in the leftmost and rightmost images in Figure \ref{fig:sit2Stand}. The controller optimization needs to search for an additional inbetween keyframe $q_1$, as well as the two time intervals $t_1$ and $t_2$ between these keyframes. 
 
 We intentionally choose the initial pose that the feet of the robot are far beyond the projection of the robot's COM in the vertical direction. If the robot simply extends the hips and the knees, it will fall backwards. This is a good test for dynamic balance. Our system successfully finds a controller that enables the robot to stand up in the simulation: the robot first accumulates a forward momentum by quickly leaning its upper body to the front. It then starts to extend the hips and the knees at the moment when the COM is moving towards the supporting feet.
 
@@ -34,7 +34,7 @@ When we apply this controller to the real robot, it works directly, without the 
 
 \subsection{Rising from a Leaning Position}
 
-In this task, the robot needs to rise from leaning on the wall to a standing position (Figure \ref{fig:lean2Stand}). In the initial configuration, the hip joints are bent and they are straightened out in the final configuration while all other joints do not move. The initial and the final poses are the only two keyframes for this task.
+In this task, the robot needs to rise from leaning on the wall to a standing position (Figure \ref{fig:lean2Stand}). The hip joints are initially bent and straightened out in the final configuration while all other joints do not move. The initial and the final poses are the only two keyframes for this task.
 
 \begin{figure}[!b]
   \centering
@@ -47,7 +47,7 @@ In this task, the robot needs to rise from leaning on the wall to a standing pos
 
 \begin{figure*}[!t]
   \centering
-  \includegraphics[width=\textwidth]{figures/kneel2Stand}
+  \includegraphics[width=0.95\textwidth]{figures/kneel2Stand}
   \caption{The results of the kneel-to-stand task in the simulation and on the real robot.}
   \vspace{-0.1in}
   \label{fig:kneel2Stand}
@@ -55,7 +55,7 @@ In this task, the robot needs to rise from leaning on the wall to a standing pos
 
 \begin{figure*}[!t]
   \centering
-  \includegraphics[width=\textwidth]{figures/stand2Hand}
+  \includegraphics[width=0.95\textwidth]{figures/stand2Hand}
   \caption{The results of the stand-to-handstand task in the simulation and on the real robot.}
   \vspace{-0.1in}
   \label{fig:stand2Hand}
@@ -80,7 +80,7 @@ To better understand how the Reality Gap is gradually narrowed by simulation cal
 
 \subsection{Rising from a Kneeling Position}
 
-Figure \ref{fig:kneel2Stand} shows that the robot stands up from a kneeling pose. Between the user-specified initial and final poses, the optimal controller consists of two additional keyframes. It demonstrates an agile getting-up motion in the simulation: The robot first leans its upper-body backwards. As its COM is moving to the back, it quickly bends the hip, flexes its ankles and stands up. This entire motion resembles one of the most agile ways that we human get up from a kneeling position when we do not use our hands for additional support. Although this controller works perfectly in the simulation, the robot falls backward in the real world. After simulation calibration, we optimize a new controller, with which the robot can successfully stand up from the kneeling position in the real world (Figure \ref{fig:kneel2Stand}).
+Figure \ref{fig:kneel2Stand} shows that the robot stands up from a kneeling pose. Between the user-specified initial and final poses, the optimal controller consists of two additional keyframes. It demonstrates an agile getting-up motion in the simulation: The robot first leans its upper-body backwards. As its COM is moving to the back, it quickly bends the hip, flexes its ankles and stands up. This entire motion resembles one of the most agile ways that we human get up from a kneeling position when we do not use our hands for additional support. Although this controller works perfectly in the simulation, the robot falls backward in the real world. After simulation calibration, we optimize a new controller, with which the robot can successfully stand up from in the real world.
 
 \subsection{Flipping to a Handstand Position}
 We test our system with a challenging gymnastic action: flipping to a handstand position from a standing pose (Figure~\ref{fig:stand2Hand}). There are two unique challenges in this task. First, the speed and the curvature of the initial arching motion is crucial and only a narrow range of such speed and curvature can lead to a balanced handstand. Second, the USB cable that connects the robot to the computer will inevitably hit the ground during the backflip, which injects a strong perturbation that is not modeled in our simulation.
