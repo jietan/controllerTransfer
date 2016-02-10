@@ -1,14 +1,18 @@
 \section{Physical Simulation}
 
-\subsection{Dynamics Equations}
+\subsection{Dynamics Equation}
 
-We model the robot as an articulated rigid body system in our simulator. We represent the states of the system $(\mathbf{x}, \dot{\mathbf{x}})$ in generalized coordinates, where $\mathbf{x}$ includes the global position $\mathbf{p}$, the orientation $\mathbf{r}$ of the root body (robot's torso), and the joint angles $\mathbf{q}$. The dynamics equations is as follows:
+We model the robot as an articulated rigid body system in our simulator, which satisfies the following dynamics equations, non-penetration and linear complementarity conditions for contact points.
 
-\begin{equation}
+\begin{align}
 \label{eq:robotdynamics}
-\mathbf{M}(\mathbf{x})\mathbf{\ddot{x}}+\mathbf{C}(\mathbf{x},\mathbf{\dot{x}})=\boldsymbol{\tau}(\mathbf{q}, \dot{\mathbf{q}}, \bar{\mathbf{q}})+\mathbf{J}^T\mathbf{f}
-\end{equation}
-where $\mathbf{M}(\mathbf{x})$ is the mass matrix and $\mathbf{C}(\mathbf{x},\mathbf{\dot{x}})$ is the Coriolis and Centrifugal force. $\boldsymbol{\tau}(\mathbf{q}, \dot{\mathbf{q}}, \bar{\mathbf{q}})$ are joint torques exerted by the actuators, which depends on the current joint angles $\mathbf{q}$, velocities $\dot{\mathbf{q}}$ and desired angles $\bar{\mathbf{q}}$. The relation between these quantities is determined by the actuator model, which is presented in the next section. $\mathbf{J}$ is the Jacobian matrix and $\mathbf{f}$ is the external contact force, which is computed based on linear complementarity conditions \cite{Tan:2012b}. In our implementation, we use DART to solve the contact force and numerically integrate the system state $(\mathbf{x}, \dot{\mathbf{x}})$ over time.
+\mathbf{M}(\mathbf{q})\mathbf{\ddot{q}}+\mathbf{C}(\mathbf{q},\mathbf{\dot{q}})&=\boldsymbol{\tau}+\mathbf{J}(\mathbf{q})^T\mathbf{f}\\
+\nonumber \mathbf{d}(\mathbf{q})&\geq \mathbf{0}\\
+\nonumber \mathbf{d}(\mathbf{q})^T\mathbf{f}&= \mathbf{0}\\
+\nonumber \mathbf{f}&\in\mathbf{K}
+\nonumber \end{align}
+
+where $\mathbf{M}(\mathbf{q})$ is the mass matrix and $\mathbf{C}(\mathbf{q},\mathbf{\dot{q}})$ is the Coriolis and Centrifugal force. $\boldsymbol{\tau}$ are joint torques exerted by the actuators. An actuator model that computes $\boldsymbol{\tau}$ based on the current state and a reference trajectory is presented in the next section. $\mathbf{J}(\mathbf{q})$ is the Jacobian matrix and $\mathbf{f}$ is the contact force. $\mathbf{d}(\mathbf{q})$ is the distance of the contact to the ground and $\mathbf{K}$ is the friction cone. In our implementation, we solve a velocity-based LCP problem to compute $\mathbf{f}$, $\mathbf{q}$ and $\dot{\mathbf{q}}$ simultaneously using DART. Please refer to the tutorial of the LCP formulation \cite{Tan:2012b} for futher details.
 \ignorethis{
   /karen{Make actuator modeling sound important. Argue why we had to build an accurate model for actuator instead of improving other sources of simulation errors.}
   }
@@ -23,7 +27,9 @@ A faithful robot simulation relies heavily on an accurate actuator model. A comm
 \end{equation}
 We call $k_p$, $k_d$ and $k_c$ the \emph{actuator gains}. Note that these are not PID gains. These gains are determined by the design of the servo, which are unknown to us. The detailed derivation of the actuator model (eq. (\ref{eqn:torqueErrorRelationSimple})) can be found in Appendix.
 
-We design a robot experiment to estimate the actuator gains $k_p$, $k_d$ and $k_c$. The purpose of this simple experiment is not to accurately identify these values. Instead, the gains that we estimate here will serve as an initial guess, and will be further optimized in simulation calibration. In the experiment, we clamp the entire robot on a table except for the left foot. We then send a periodic control signal $\bar{q}(t)$ to the servo at the left ankle (blue curve in Figure \ref{fig:actuatorId}). The desired joint angle stays at the maximum value for 0.67 second, then changes to the minimum value and stays for another 0.67 second and repeats. We record the trajectory of the actual joint angle $q(t)$ throughout the experiment (green curve in Figure \ref{fig:actuatorId}). 
+Accurately identifying these gains would be difficult and tedious, requiring a large number of carefully designed experiments on each of the actuators. Instead, we choose to run only one simple experiment on one actuator. This gives us an initial guess of the gains. We then rely on simulation calibration to refine this estimation.
+
+In the experiment, we clamp the entire robot on a table except for the left foot. We then send a periodic control signal $\bar{q}(t)$ to the servo at the left ankle (blue curve in Figure \ref{fig:actuatorId}). The desired joint angle stays at the maximum value for 0.67 second, then changes to the minimum value and stays for another 0.67 second and repeats. We record the trajectory of the actual joint angle $q(t)$ throughout the experiment (green curve in Figure \ref{fig:actuatorId}). 
 
 \begin{figure}[!t]
   \centering
@@ -41,3 +47,7 @@ Given $q(t)$ and $\bar{q}(t)$, we apply regression to estimate the actuator gain
 where $I$ is the moment of inertia of the foot with respect to the rotating axis. The above equation is derived by plugging into $\tau = I\ddot{q}+\dot{I}\dot{q}$ and the fact that $\dot{I}\dot{q}=0$ because the foot is a rigid body that rotates along a fixed axis. Our experiments and computation show that the actuator gains are $k_p=9.272(N\cdot m/rad)$, $k_d=0.3069(N\cdot m\cdot s/rad)$, and $k_c=0.03(N\cdot m)$. 
 
 
+
+%\begin{displaymath}
+%\min_{\boldsymbol{\theta}}\frac{1}{n}\sum_{i=1}^{n}\int||\tilde{\mathbf{x}}_i(\bar{\mathbf{q}}(t))-\mathbf{x}(\bar{\mathbf{q}}(t);\boldsymbol{\theta})||^2\mathrm{d}t
+%\end{displaymath}
