@@ -19,7 +19,7 @@ where $\mathbf{M}(\mathbf{q})$ is the mass matrix and $\mathbf{C}(\mathbf{q},\ma
 
 \subsection{Actuator Model}
 \label{sec:motorDynamics}
-A faithful robot simulation relies heavily on an accurate actuator model. A common practice is to set the same PID gains in the simulation as those in the servo. However, Dynamixel AX-18 servos, used on our robot (ROBOTIS BIOLOID GP), do not support PID control. Although the servo can track an input desired angle $\bar{q}$, the relation between the joint error $\bar{q}-q$ and the output torque $\tau$ is unclear. We derive an actuator model based on the ideal DC motor assumption and the specification of the servo:
+A faithful robot simulation relies heavily on an accurate actuator model. A common practice is to set the same PID gains in the simulation as those in the servo. However, Dynamixel AX-18 servos, used on our robot (ROBOTIS BIOLOID GP), do not support PID control. Although the servo can track an input reference angle $\bar{q}$, the relation between the joint error $\bar{q}-q$ and the output torque $\tau$ is unclear. We derive an actuator model based on the ideal DC motor assumption and the specification of the servo:
 
 \begin{equation}
   \tau = -k_p(q-\bar{q}) - k_d\dot{q} - k_c\sgn(\dot{q})\\
@@ -29,12 +29,12 @@ We call $k_p$, $k_d$ and $k_c$ the \emph{actuator gains}. Note that these are no
 
 Accurately identifying these gains would be difficult and tedious, requiring a large number of carefully designed experiments on each of the actuators. Instead, we choose to run only one simple experiment on one actuator. This gives us an initial guess of the gains. We then rely on simulation calibration to refine this estimation.
 
-In the experiment, we clamp the entire robot on a table except for the left foot. We then send a periodic control signal $\bar{q}(t)$ to the servo at the left ankle (blue curve in Figure \ref{fig:actuatorId}). The desired joint angle stays at the maximum value for 0.67 second, then changes to the minimum value and stays for another 0.67 second and repeats. We record the trajectory of the actual joint angle $q(t)$ throughout the experiment (green curve in Figure \ref{fig:actuatorId}). 
+In the experiment, we clamp the entire robot on a table except for the left foot. We then send a periodic control signal $\bar{q}(t)$ to the servo at the left ankle (blue curve in Figure \ref{fig:actuatorId}). The reference joint angle stays at the maximum value for 0.67 second, then changes to the minimum value and stays for another 0.67 second and repeats. We record the trajectory of the actual joint angle $q(t)$ throughout the experiment (green curve in Figure \ref{fig:actuatorId}). 
 
 \begin{figure}[!t]
   \centering
   \includegraphics[width=0.3\textwidth]{figures/actuatorId}
-  \caption{The trajectories of the desired and the measured joint angle for acutator identification.}
+  \caption{The trajectories of the reference and the measured joint angle for acutator identification.}
   \vspace{-0.1in}
   \label{fig:actuatorId}
 \end{figure}

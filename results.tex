@@ -8,11 +8,11 @@
   \label{fig:sit2Stand}
 \end{figure*}
 
-We evaluate our system using four locomotion tasks. Please watch the accompanying video for the robot performance in the simulation and in the real world.
+We evaluate our system using four tasks. Please watch the accompanying video for the robot performance in the simulation and in the real world.
 
 \subsection{Experiment Setup}
 
-We use BIOLOID GP as our robot platform. It is a humanoid robot that consists of 18 degrees of freedom that are powered by Dynamixel AX-12/AX-18 servos. To control the robot, a master program on the PC writes the desired pose $\bar{\mathbf{q}}$ to the serial port that is connected to the robot. A slave program that runs on the robot's onboard microprocessor listens to this port and sends the desired joint angle to each actuator. At the same time, the robot performance data $\tilde{\mathbf{x}}$ is measured and sent back to the computer. We use onboard rotary encoders to measure the joint angles and a VICON motion capture system to measure the global position and orientation of the robot's torso.
+We use BIOLOID GP as our robot platform. This dynamic system has totally 22 degrees of freedom. While 18 of them are controllable by Dynamixel AX-12/AX-18 servos, six of them are underactuated, including the root position and orientation. To control the robot, a master program on the PC writes the reference pose $\bar{\mathbf{q}}$ to the serial port that is connected to the robot. A slave program that runs on the robot's onboard microprocessor listens to this port and sends the reference joint angle to each actuator. At the same time, the robot performance data $\tilde{\mathbf{x}}$ is measured and sent back to the computer. We use onboard rotary encoders to measure the joint angles and a VICON motion capture system to measure the global position and orientation of the robot's torso.
 
 Our system is implemented in C++ and runs on a laptop with a 2.6GHz quad-core CPU. We use DART to simulate the physics. We find that all the tasks can be achieved with symmetric lower body motions, which enables us to reduce the dimensionality of the control space in controller optimization. For each simulation calibration, we collect three episodes of robot data by running the same controller three times to average out the noise and other possible perturbations. Each episode is approximately two seconds. We use 32 samples per iteration and at most 50 iterations in CMA. It takes about 15 minutes to find an optimal solution in controller optimization or simulation calibration.
 
@@ -85,5 +85,5 @@ Figure \ref{fig:kneel2Stand} shows that the robot stands up from a kneeling pose
 \subsection{Flipping to a Handstand Position}
 We test our system with a challenging gymnastic action: flipping to a handstand position from a standing pose (Figure~\ref{fig:stand2Hand}). There are two unique challenges in this task. First, the speed and the curvature of the initial arching motion is crucial and only a narrow range of such speed and curvature can lead to a balanced handstand. Second, the USB cable that connects the robot to the computer will inevitably hit the ground during the backflip, which injects a strong perturbation that is not modeled in our simulation.
 
-With two iterations of simulation calibration and controller optimization, our system finds a successful controller that works both in the simulation and in the real world: The robot arches back rapidly and lifts its feet after the arms touch the ground. It shows that our system can automatically design controllers for challenging locomotion tasks, even with strong unmodeled perturbations.
+With two iterations of simulation calibration and controller optimization, our system finds a successful controller that works both in the simulation and in the real world: The robot arches back rapidly and lifts its feet after the arms touch the ground. It shows that our system can automatically design controllers for challenging tasks, even with strong unmodeled perturbations.
 
